@@ -5,6 +5,22 @@ mat-sidenav-content {
 .example-spacer {
   flex: 1 1 auto;
 }
-mat-sidenav{
+mat-sidenav {
   width: 30%;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:hover,
+a:active {
+  color: lightgray;
+}
+
+.navigation-items{
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
 }
