@@ -1,2 +1,8 @@
-
-<router-outlet></router-outlet>
+<mat-sidenav-container>
+  <mat-sidenav [opened]="openSideNav" #sideNav role="navigation">Start</mat-sidenav>
+  <mat-sidenav-content>
+    <button (click)="sideNav.toggle()">Togle sidenav</button>
+    <button (click)="openSideNav=!openSideNav">Togle sidenav</button>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
