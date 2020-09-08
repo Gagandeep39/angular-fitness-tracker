@@ -37,14 +37,26 @@
     <mat-form-field appearance="outline">
       <mat-label>Birthdate</mat-label>
       <input 
+      ngModel
+      name="birthday"
+      required
       matInput 
       [matDatepicker]="picker" 
       [max]="maxDate"
       >
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker> 
-      <mat-error>Should be atleast 6 characters</mat-error>
+      <mat-error>Required *</mat-error>
     </mat-form-field>
-    <button mat-raised-button color="primary" type="submit">Submit</button>
+    <mat-checkbox ngModel name="agree" required>I Agree</mat-checkbox>
+    <button 
+    mat-raised-button  
+    style="margin-top: '10px'" 
+    color="primary" 
+    type="submit" 
+    [disabled]="signupForm.invalid"
+    >
+    Submit
+    </button>
   </form>
 </section>
