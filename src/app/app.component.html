@@ -3,13 +3,13 @@
   <mat-sidenav-content>
     <p>
       <mat-toolbar color="primary">
-        <button mat-icon-button class="example-icon" (click)="sideNav.toggle()"
+        <button fxHide.gt-xs mat-icon-button class="example-icon" (click)="sideNav.toggle()"
           aria-label="Example icon-button with menu icon">
           <mat-icon>menu</mat-icon>
         </button>
         <span><a routerLink="/">Fitness Tracker</a></span>
         <span class="example-spacer"></span>
-        <div>
+        <div fxHide.xs>
           <ul fxLayout fxLayoutGap="10px" class="navigation-items">
             <li><a routerLink="/signup">Sign Up</a></li>
             <li><a routerLink="/login">Login</a></li>
