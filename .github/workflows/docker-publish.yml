@@ -34,6 +34,9 @@ jobs:
       id: docker_build
       uses: docker/build-push-action@v2
       with:
+        context: .
+        file: ./Dockerfile
+        platforms: linux/amd64,linux/arm64,linux/386
         push: true
         tags: gagandeep39/angular-fitness-tracker:${{env.NOW}}
     # - name: Build the Docker image
