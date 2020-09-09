@@ -23,6 +23,8 @@ jobs:
         npm install -g @angular/cli@latest
         npm install
         ng build --prod --base-href="/angular-fitness-tracker/"
+    - name: Set env
+      run: echo "::set-env name=NOW::v$(date +'%Y%m%d.%H%M%S')"
     - name: Login to DockerHub
       uses: docker/login-action@v1 
       with:
@@ -33,7 +35,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: gagandeep39/angular-fitness-tracker:$(date +%s)
+        tags: gagandeep39/angular-fitness-tracker:${{env.NOW}}
     # - name: Build the Docker image
     #   run: docker build . --file Dockerfile --tag gagandeep39/angular-fitness-tracker:$(date +%s)
 
