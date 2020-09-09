@@ -1,77 +1,46 @@
-name: Docker Image CI
+name: Docker Deployment
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js 14.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: "14.x"
-    - name: Make a production build
-      run: |
-        npm install -g @angular/cli@latest
-        npm install
-        ng build --prod --base-href="/angular-fitness-tracker/"
-    - name: Set env
-      run: echo "::set-env name=NOW::v$(date +'%Y%m%d.%H%M%S')"
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v1
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
-    - name: Login to DockerHub
-      uses: docker/login-action@v1 
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-    - name: Build and push
-      id: docker_build
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        file: ./Dockerfile
-        platforms: linux/amd64,linux/arm64,linux/386
-        push: true
-        tags: gagandeep39/angular-fitness-tracker:${{env.NOW}}
-    # - name: Build the Docker image
-    #   run: docker build . --file Dockerfile --tag gagandeep39/angular-fitness-tracker:$(date +%s)
-
-# name: Deploy to docker hub
-
-# on:
-#   push:
-#     branches: master
-
-# jobs:
-#   main:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Set up QEMU
-#         uses: docker/setup-qemu-action@v1
-#       - name: Set up Docker Buildx
-#         uses: docker/setup-buildx-action@v1
-#       - name: Login to DockerHub
-#         uses: docker/login-action@v1 
-#         with:
-#           username: ${{ secrets.DOCKER_USERNAME }}
-#           password: ${{ secrets.DOCKER_PASSWORD }}
-#       - name: Set env
-#         run: echo "::set-env name=NOW::v$(date +'%Y%m%d.%H%M%S')"
-#       - name: Build and push
-#         id: docker_build
-#         uses: docker/build-push-action@v2
-#         with:
-#           push: true
-#           tags: ${{github.repository}}:${{env.NOW}}
-#       - name: Image digest
-#         run: echo ${{ steps.docker_build.outputs.digest }}
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14.x"
+      - name: Make a production build
+        run: |
+          npm install -g @angular/cli@latest
+          npm install
+          ng build --prod --base-href="/angular-fitness-tracker/"
+      - name: Set env
+        run: echo "::set-env name=NOW::v$(date +'%Y%m%d.%H%M%S')"
+        # Required for Build and push step
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+        # Required for Build and push step
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+        # Required for Build and push step
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64,linux/arm64,linux/386
+          push: true
+          tags: gagandeep39/angular-fitness-tracker:${{env.NOW}}
