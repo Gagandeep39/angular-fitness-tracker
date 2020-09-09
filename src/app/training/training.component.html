@@ -6,4 +6,4 @@
     <app-past-training></app-past-training>
   </mat-tab>
 </mat-tab-group>
-<app-current-training *ngIf="ongoingTraining"></app-current-training>
+<app-current-training *ngIf="ongoingTraining" (trainingExit)="ongoingTraining=false"></app-current-training>
