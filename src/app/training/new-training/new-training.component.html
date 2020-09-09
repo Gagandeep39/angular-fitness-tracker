@@ -6,8 +6,8 @@
       <mat-form-field appearance="outline">
         <mat-label>Select type of training</mat-label>
         <mat-select>
-          <mat-option *ngFor="let item of trainings" [value]="item">
-            {{item}}
+          <mat-option *ngFor="let exercise of trainings" [value]="exercise.id">
+            {{exercise.name}}
           </mat-option>
         </mat-select>
       </mat-form-field>
