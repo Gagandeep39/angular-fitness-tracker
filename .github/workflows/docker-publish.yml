@@ -46,6 +46,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14.x"
+      - name: Make a production build
+        run: |
+          npm install -g @angular/cli@latest
+          npm install
+          ng build --prod --base-href="/angular-fitness-tracker/"
 
       - name: Build image
         run: docker build . --file Dockerfile --tag $IMAGE_NAME
