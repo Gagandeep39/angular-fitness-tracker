@@ -16,6 +16,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from "@angular/forms";
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
+import { StopTrainingComponent } from './common/stop-training/stop-training.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
     WelcomeComponent,
     HeaderComponent,
     SidenavListComponent,
+    StopTrainingComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +41,9 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
     FormsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  // Used for components which are rarely used/ no direct way of accessing
+  // Will work even without adding it here
+  entryComponents: [StopTrainingComponent]
 })
 export class AppModule { }
