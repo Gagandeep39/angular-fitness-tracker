@@ -20,6 +20,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/${{ github.repository.name }}:$NOW
+          tags: ${{ secrets.DOCKER_USERNAME }}/${{ github.repository.name }}:${{ env.NOW }}
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
