@@ -15,6 +15,7 @@ export class TrainingService {
     { id: 'burpees', name: 'Burpees', duration: 60, calories: 8 },
     { id: 'push-ups', name: 'Push Ups', duration: 60, calories: 20 },
   ];
+  private exercises: Exercise[] = [];
 
   constructor() {}
 
@@ -27,6 +28,28 @@ export class TrainingService {
       (exer) => exer.id === selectedId
     );
     this.exerciseChange.next({ ...this.activeExercise });
+  }
+
+  completeExercise() {
+    this.exercises.push({
+      ...this.activeExercise,
+      date: new Date(),
+      state: 'completed',
+    });
+    this.activeExercise = null;
+    this.exerciseChange.next(null);
+  }
+
+  cancelExercise(progress: number) {
+    this.exercises.push({
+      ...this.activeExercise,
+      calories: this.activeExercise.duration * (progress / 100),
+      duration: this.activeExercise.duration * (progress / 100),
+      date: new Date(),
+      state: 'cancelled',
+    });
+    this.activeExercise = null;
+    this.exerciseChange.next(null);
   }
 
   getActiveExercise() {
