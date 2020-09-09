@@ -23,6 +23,10 @@ export class TrainingService {
     return [...this.availableExercise];
   }
 
+  getExerciseHistory() {
+    return this.exercises.slice();
+  }
+
   startExercise(selectedId: string) {
     this.activeExercise = this.availableExercise.find(
       (exer) => exer.id === selectedId
@@ -43,7 +47,7 @@ export class TrainingService {
   cancelExercise(progress: number) {
     this.exercises.push({
       ...this.activeExercise,
-      calories: this.activeExercise.duration * (progress / 100),
+      calories: this.activeExercise.calories * (progress / 100),
       duration: this.activeExercise.duration * (progress / 100),
       date: new Date(),
       state: 'cancelled',
