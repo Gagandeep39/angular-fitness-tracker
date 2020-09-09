@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { AuthData } from '../models/auth-data';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  public authChange = new Subject<boolean>();
   private user: User;
 
   constructor() {}
@@ -15,6 +17,7 @@ export class AuthService {
       email: authData.email,
       userId: Math.round(Math.random() * 10000).toString(),
     };
+    this.authChange.next(true);
   }
 
   login(authData: AuthData) {
@@ -22,10 +25,12 @@ export class AuthService {
       email: authData.email,
       userId: Math.round(Math.random() * 10000).toString(),
     };
+    this.authChange.next(true);
   }
 
   logout() {
     this.user = null;
+    this.authChange.next(false);
   }
 
   getUser() {
