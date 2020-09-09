@@ -1,4 +1,4 @@
-name: Create production build for feature branch
+name: Create production build and deploy to gh-pages
 
 on:
   push:
@@ -21,15 +21,11 @@ jobs:
         run: |
           npm install -g @angular/cli@latest
           npm install
-          ng build --prod --base-href="https://gagandeep39.github.io/angular-fitness-tracker/"
+          ng build --prod --base-href="/angular-fitness-tracker/"
       - name: Deploy
-        run: |
-          git config --global user.name $user_name
-          git config --global user.email $user_email
-          git remote set-url origin https://${github_token}@github.com/${repository}
-          npm run deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v2
         env:
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
-          github_token: ${{ secrets.ACCESS_TOKEN }}
-          repository: ${{ github.repository }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BASE_BRANCH: master
+          BRANCH: gh-pages
+          FOLDER: dist/angular-fitness-tracker

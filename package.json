@@ -8,10 +8,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "prodbuild": "ng build --prod --base-href='https://gagandeep39.github.io/angular-fitness-tracker/'",
-    "predeploy": "npm run prodbuild",
-    "deploy": "gh-pages -d build"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
