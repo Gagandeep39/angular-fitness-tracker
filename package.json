@@ -1,6 +1,7 @@
 {
   "name": "angular-fitness-tracker",
   "version": "0.0.0",
+  "homepage": "https://gagandeep39.github.io/angular-fitness-tracker/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
