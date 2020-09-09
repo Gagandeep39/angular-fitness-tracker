@@ -1,0 +1,19 @@
+<p>
+  <mat-toolbar color="primary">
+    <button fxHide.gt-xs mat-icon-button class="example-icon" (click)="onToggleSideNav()"
+      aria-label="Example icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span><a routerLink="/">Fitness Tracker</a></span>
+    <span class="example-spacer"></span>
+    <div fxHide.xs>
+      <ul fxLayout fxLayoutGap="10px" class="navigation-items">
+        <li><a routerLink="/signup">Sign Up</a></li>
+        <li><a routerLink="/login">Login</a></li>
+        <li><a routerLink="/training">Training</a></li>
+        <li>Logout</li>
+      </ul>
+
+    </div>
+  </mat-toolbar>
+</p>

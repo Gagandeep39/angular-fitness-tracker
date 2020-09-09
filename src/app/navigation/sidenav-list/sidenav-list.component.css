@@ -1,0 +1,12 @@
+mat-sidenav-container,
+mat-sidenav-content {
+  height: 100%;
+}
+
+mat-sidenav {
+  width: 200px;
+}
+
+.nav-caption {
+  padding-left: 10px;
+}

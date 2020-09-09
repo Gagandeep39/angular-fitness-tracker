@@ -1,47 +1,9 @@
 <mat-sidenav-container>
   <mat-sidenav [opened]="openSideNav" #sideNav role="navigation">
-    <mat-nav-list>
-      <a mat-list-item routerLink="/signup" (click)="sideNav.toggle()">
-        <mat-icon>face</mat-icon>
-        <span class="nav-caption">Sign Up</span>
-      </a>
-      <a mat-list-item routerLink="/login" (click)="sideNav.toggle()">
-        <mat-icon>input</mat-icon>
-        <span class="nav-caption">Login</span>
-      </a>
-      <a mat-list-item routerLink="/training" (click)="sideNav.toggle()">
-        <mat-icon>fitness_center</mat-icon>
-        <span class="nav-caption">Training</span>
-      </a>
-      <!-- Used to show anything other than anchor tag -->
-      <mat-list-item>
-        <button mat-icon-button>
-          <mat-icon>eject</mat-icon>
-          <span class="nav-caption">Logout</span>
-        </button>
-      </mat-list-item>
-    </mat-nav-list>
+    <app-sidenav-list (toggleSideNav)="sideNav.close()" ></app-sidenav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <p>
-      <mat-toolbar color="primary">
-        <button fxHide.gt-xs mat-icon-button class="example-icon" (click)="sideNav.toggle()"
-          aria-label="Example icon-button with menu icon">
-          <mat-icon>menu</mat-icon>
-        </button>
-        <span><a routerLink="/">Fitness Tracker</a></span>
-        <span class="example-spacer"></span>
-        <div fxHide.xs>
-          <ul fxLayout fxLayoutGap="10px" class="navigation-items">
-            <li><a routerLink="/signup">Sign Up</a></li>
-            <li><a routerLink="/login">Login</a></li>
-            <li><a routerLink="/training">Training</a></li>
-            <li>Logout</li>
-          </ul>
-
-        </div>
-      </mat-toolbar>
-    </p>
+    <app-header (toggleSideNav)="sideNav.toggle()"></app-header>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
