@@ -6,7 +6,7 @@ mat-sidenav-content {
   flex: 1 1 auto;
 }
 mat-sidenav {
-  width: 30%;
+  width: 200px;
 }
 
 a {
@@ -23,4 +23,8 @@ a:active {
   padding: 0px;
   margin: 0px;
   list-style: none;
+}
+
+.nav-caption{
+  padding-left: 10px;
 }
