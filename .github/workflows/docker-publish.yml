@@ -23,8 +23,19 @@ jobs:
         npm install -g @angular/cli@latest
         npm install
         ng build --prod --base-href="/angular-fitness-tracker/"
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag gagandeep39/angular-fitness-tracker:$(date +%s)
+    - name: Login to DockerHub
+      uses: docker/login-action@v1 
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Build and push
+      id: docker_build
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        tags: gagandeep39/angular-fitness-tracker:$(date +%s)
+    # - name: Build the Docker image
+    #   run: docker build . --file Dockerfile --tag gagandeep39/angular-fitness-tracker:$(date +%s)
 
 # name: Deploy to docker hub
 
