@@ -1,9 +1,10 @@
 <section class="signup-form">
   <form 
   fxLayout="column" 
-  fxLayoutAlign="center center" 
-  (ngSubmit)="submitForm(signupForm)" 
-  #signupForm="ngForm"
+  fxLayoutAlign="center center"
+  fxLayoutGap="10px"
+  [formGroup]="loginForm"
+  (ngSubmit)="submitForm()"
   >
     <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
@@ -11,13 +12,10 @@
       matInput 
       type="email" 
       placeholder="Your Email *" 
-      ngModel name="email" 
-      email 
-      required 
-      #eml="ngModel"
+      formControlName="email"
       >
-      <mat-error *ngIf="eml.hasError('required')">Required *</mat-error>
-      <mat-error *ngIf="eml.hasError('email')">Invalid Email</mat-error>
+        <mat-error *ngIf="loginForm.get('email').invalid && loginForm.get('email').errors['required']">Required *</mat-error>
+        <mat-error *ngIf="loginForm.get('email').invalid && loginForm.get('email').errors['email']">Invalid Email</mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Password</mat-label>
@@ -25,10 +23,7 @@
       matInput 
       type="password" 
       placeholder="Your Password *" 
-      ngModel 
-      name="password" 
-      required 
-      minlength="6" 
+      formControlName="password"
       #pwd
       >
       <mat-hint> {{ pwd.value?.length }}/6</mat-hint>
@@ -39,7 +34,7 @@
     style="margin-top: '10px'" 
     color="primary" 
     type="submit" 
-    [disabled]="signupForm.invalid"
+    [disabled]="loginForm.invalid"
     >
     Submit
     </button>
