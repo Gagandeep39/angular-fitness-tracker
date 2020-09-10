@@ -10,13 +10,19 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { Store } from '@ngrx/store';
+import * as fromRoot from '../app.reducer';
 
 // Generated using command `ng g guard auth`
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate, CanLoad {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private store: Store<fromRoot.State>
+  ) {}
   canLoad(
     route: Route
   ):
@@ -24,8 +30,7 @@ export class AuthGuard implements CanActivate, CanLoad {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
-    if (this.authService.isAuth()) return true;
-    else this.router.navigate(['/login']);
+    return this.store.select(fromRoot.getIsAuthenticated);
   }
 
   canActivate(
@@ -36,7 +41,6 @@ export class AuthGuard implements CanActivate, CanLoad {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (this.authService.isAuth()) return true;
-    else this.router.navigate(['/login']);
+    return this.store.select(fromRoot.getIsAuthenticated);
   }
 }
