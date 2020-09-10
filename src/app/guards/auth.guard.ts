@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../app.reducer';
+import { take } from 'rxjs/operators';
 
 // Generated using command `ng g guard auth`
 @Injectable({
@@ -30,7 +31,7 @@ export class AuthGuard implements CanActivate, CanLoad {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
-    return this.store.select(fromRoot.getIsAuthenticated);
+    return this.store.select(fromRoot.getIsAuthenticated).pipe(take(1));
   }
 
   canActivate(
@@ -41,6 +42,8 @@ export class AuthGuard implements CanActivate, CanLoad {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return this.store.select(fromRoot.getIsAuthenticated);
+      // Will close after returning first value
+      // All following call will return that same value
+    return this.store.select(fromRoot.getIsAuthenticated).pipe(take(1));
   }
 }
