@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "fir-contact-c6ceb": {
+      "hosting": {
+        "angular-fitness-tracker": [
+          "fir-contact-c6ceb"
+        ]
+      }
+    }
+  }
+}
