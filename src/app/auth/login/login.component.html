@@ -30,7 +30,7 @@
       <mat-error>Should be atleast 6 characters</mat-error>
     </mat-form-field>
     <button 
-    *ngIf="!isLoading"
+    *ngIf="!(isLoading$ | async)"
     mat-raised-button  
     style="margin-top: '10px'" 
     color="primary" 
@@ -39,6 +39,6 @@
     >
     Submit
     </button>
-    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <mat-spinner *ngIf="(isLoading$ | async)"></mat-spinner>
   </form>
 </section>
