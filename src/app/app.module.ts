@@ -20,12 +20,11 @@ import { StopTrainingComponent } from './common/stop-training/stop-training.comp
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SignupComponent,
-    LoginComponent,
     TrainingComponent,
     CurrentTrainingComponent,
     NewTrainingComponent,
@@ -42,9 +41,9 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     MaterialDemoModule,
     FlexLayoutModule,
     FormsModule,
-    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    AuthModule
   ],
   providers: [],
   bootstrap: [AppComponent],
