@@ -21,7 +21,8 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AuthModule } from './auth/auth.module';
-import { TrainingModule } from './training/training.module';
+import { StoreModule } from '@ngrx/store';
+import { appReducer } from './app.reducer';
 
 @NgModule({
   declarations: [
@@ -39,11 +40,12 @@ import { TrainingModule } from './training/training.module';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AuthModule,
+    StoreModule.forRoot({ ui: appReducer }),
   ],
   providers: [],
   bootstrap: [AppComponent],
   // Used for components which are rarely used/ no direct way of accessing
   // Will work even without adding it here
-  entryComponents: [StopTrainingComponent],
+  // entryComponents: [StopTrainingComponent],
 })
 export class AppModule {}
