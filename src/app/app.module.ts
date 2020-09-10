@@ -39,7 +39,6 @@ import { TrainingModule } from './training/training.module';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AuthModule,
-    TrainingModule
   ],
   providers: [],
   bootstrap: [AppComponent],
