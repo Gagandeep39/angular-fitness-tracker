@@ -4,6 +4,7 @@ import { Subject, BehaviorSubject, Subscription } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { UiService } from './ui.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,9 +25,10 @@ export class TrainingService {
   //   { id: 'burpees', name: 'Burpees', duration: 60, calories: 8 },
   //   { id: 'push-ups', name: 'Push Ups', duration: 60, calories: 20 },
   // ];
-  constructor(private firestoreDb: AngularFirestore) {}
+  constructor(private firestoreDb: AngularFirestore, private uiService: UiService) {}
 
   getAllExercises() {
+    this.uiService.loadStateChanged.next(true);
     this.allExerciseSubs = this.firestoreDb
       .collection('availableExercises')
       .snapshotChanges()
@@ -44,17 +46,26 @@ export class TrainingService {
       .subscribe((exercises) => {
         this.availableExercise = exercises;
         this.exercisesChange.next([...this.availableExercise]);
+        this.uiService.loadStateChanged.next(false);
+      }, error => {
+        this.uiService.showSnackbar('Something went wrong, try again later', 'Okay !', 3000);
+        this.uiService.loadStateChanged.next(false);
       });
     this.allSubscription.push(this.allExerciseSubs);
   }
 
   getExerciseHistory() {
+    this.uiService.loadStateChanged.next(true);
     // Here we dnt need ID sowe can just fetch other data
     this.exerciseHistorySubs = this.firestoreDb
       .collection('completedExercise')
       .valueChanges()
       .subscribe((exercises: Exercise[]) => {
         this.finishedExerciseChange.next(exercises);
+        this.uiService.loadStateChanged.next(false);
+      }, error => {
+        this.uiService.showSnackbar('Something went wrong, try again later', 'Okay !', 3000);
+        this.uiService.loadStateChanged.next(false);
       });
     this.allSubscription.push(this.exerciseHistorySubs);
   }
