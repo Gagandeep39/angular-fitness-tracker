@@ -14,8 +14,9 @@ export class TrainingService {
   public exercisesChange = new Subject<Exercise[]>();
   public finishedExerciseChange = new Subject<Exercise[]>();
   private availableExercise: Exercise[] = [];
-  private exerciseHistorySubs: Subscription;
-  private allExerciseSubs: Subscription;
+  private exerciseHistorySubs: Subscription = null;
+  private allExerciseSubs: Subscription = null;
+  private allSubscription: Subscription[] = [];
   //   private availableExercise: Exercise[] = [
   //   { id: 'crunches', name: 'Crunches', duration: 30, calories: 8 },
   //   { id: 'touch-toes', name: 'Touch Toes', duration: 180, calories: 15 },
@@ -44,6 +45,7 @@ export class TrainingService {
         this.availableExercise = exercises;
         this.exercisesChange.next([...this.availableExercise]);
       });
+    this.allSubscription.push(this.allExerciseSubs);
   }
 
   getExerciseHistory() {
@@ -54,6 +56,7 @@ export class TrainingService {
       .subscribe((exercises: Exercise[]) => {
         this.finishedExerciseChange.next(exercises);
       });
+    this.allSubscription.push(this.exerciseHistorySubs);
   }
 
   startExercise(selectedId: string) {
@@ -89,10 +92,9 @@ export class TrainingService {
     return { ...this.activeExercise };
   }
 
-  // Required to prevent errors afteer logout as the subscriptions keep on running 
+  // Required to prevent errors afteer logout as the subscriptions keep on running
   cancelSubscriptions() {
-    this.exerciseHistorySubs.unsubscribe();
-    this.allExerciseSubs.unsubscribe();
+    this.allSubscription.forEach((subs) => subs.unsubscribe());
   }
 
   private addDataToDatabase(exercise: Exercise) {
