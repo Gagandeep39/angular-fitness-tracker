@@ -7,10 +7,11 @@ const routes: Routes = [
   { path: '', component: WelcomeComponent },
   {
     path: 'training',
-    loadChildren: './training/training.module#TrainingModule',
-    canLoad: [AuthGuard]
+    // Causes Material modules errors
+    // loadChildren: './training/training.module#TrainingModule',
+    canLoad: [AuthGuard],
     // OR
-    // loadChildren: ()=>import('./training/training.module').then(module => module.TrainingModule)
+    loadChildren: ()=>import('./training/training.module').then(module => module.TrainingModule)
   },
 ];
 
