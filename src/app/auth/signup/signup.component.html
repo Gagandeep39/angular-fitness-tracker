@@ -50,6 +50,7 @@
     </mat-form-field>
     <mat-checkbox ngModel name="agree" required>I Agree</mat-checkbox>
     <button 
+    *ngIf="!isLoading"
     mat-raised-button  
     style="margin-top: '10px'" 
     color="primary" 
@@ -58,5 +59,6 @@
     >
     Submit
     </button>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
   </form>
 </section>
