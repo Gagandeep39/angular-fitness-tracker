@@ -59,6 +59,7 @@ export class TrainingService {
             3000
           );
           this.uiService.loadStateChanged.next(false);
+          this.exercisesChange.next(null);
         }
       );
     this.allSubscription.push(this.allExerciseSubs);
