@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Exercise } from '../models/exercise';
-import { Subject, BehaviorSubject } from 'rxjs';
+import { Subject, BehaviorSubject, Subscription } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -14,6 +14,8 @@ export class TrainingService {
   public exercisesChange = new Subject<Exercise[]>();
   public finishedExerciseChange = new Subject<Exercise[]>();
   private availableExercise: Exercise[] = [];
+  private exerciseHistorySubs: Subscription;
+  private allExerciseSubs: Subscription;
   //   private availableExercise: Exercise[] = [
   //   { id: 'crunches', name: 'Crunches', duration: 30, calories: 8 },
   //   { id: 'touch-toes', name: 'Touch Toes', duration: 180, calories: 15 },
@@ -24,7 +26,7 @@ export class TrainingService {
   constructor(private firestoreDb: AngularFirestore) {}
 
   getAllExercises() {
-    this.firestoreDb
+    this.allExerciseSubs = this.firestoreDb
       .collection('availableExercises')
       .snapshotChanges()
       .pipe(
@@ -46,7 +48,7 @@ export class TrainingService {
 
   getExerciseHistory() {
     // Here we dnt need ID sowe can just fetch other data
-    this.firestoreDb
+    this.exerciseHistorySubs = this.firestoreDb
       .collection('completedExercise')
       .valueChanges()
       .subscribe((exercises: Exercise[]) => {
@@ -85,6 +87,12 @@ export class TrainingService {
 
   getActiveExercise() {
     return { ...this.activeExercise };
+  }
+
+  // Required to prevent errors afteer logout as the subscriptions keep on running 
+  cancelSubscriptions() {
+    this.exerciseHistorySubs.unsubscribe();
+    this.allExerciseSubs.unsubscribe();
   }
 
   private addDataToDatabase(exercise: Exercise) {
