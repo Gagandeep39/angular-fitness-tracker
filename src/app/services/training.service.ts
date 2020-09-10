@@ -12,6 +12,7 @@ export class TrainingService {
   private activeExercise: Exercise;
   public exerciseChange = new Subject<Exercise>();
   public exercisesChange = new Subject<Exercise[]>();
+  public finishedExerciseChange = new Subject<Exercise[]>();
   private availableExercise: Exercise[] = [];
   //   private availableExercise: Exercise[] = [
   //   { id: 'crunches', name: 'Crunches', duration: 30, calories: 8 },
@@ -20,8 +21,7 @@ export class TrainingService {
   //   { id: 'burpees', name: 'Burpees', duration: 60, calories: 8 },
   //   { id: 'push-ups', name: 'Push Ups', duration: 60, calories: 20 },
   // ];
-  private exercises: Exercise[] = [];
-  constructor(private firestoreDb: AngularFirestore) { }
+  constructor(private firestoreDb: AngularFirestore) {}
 
   getAllExercises() {
     this.firestoreDb
@@ -45,7 +45,13 @@ export class TrainingService {
   }
 
   getExerciseHistory() {
-    return this.exercises.slice();
+    // Here we dnt need ID sowe can just fetch other data
+    this.firestoreDb
+      .collection('completedExercise')
+      .valueChanges()
+      .subscribe((exercises: Exercise[]) => {
+        this.finishedExerciseChange.next(exercises);
+      });
   }
 
   startExercise(selectedId: string) {
@@ -56,7 +62,7 @@ export class TrainingService {
   }
 
   completeExercise() {
-    this.exercises.push({
+    this.addDataToDatabase({
       ...this.activeExercise,
       date: new Date(),
       state: 'completed',
@@ -66,7 +72,7 @@ export class TrainingService {
   }
 
   cancelExercise(progress: number) {
-    this.exercises.push({
+    this.addDataToDatabase({
       ...this.activeExercise,
       calories: this.activeExercise.calories * (progress / 100),
       duration: this.activeExercise.duration * (progress / 100),
@@ -79,5 +85,9 @@ export class TrainingService {
 
   getActiveExercise() {
     return { ...this.activeExercise };
+  }
+
+  private addDataToDatabase(exercise: Exercise) {
+    this.firestoreDb.collection('completedExercise').add(exercise);
   }
 }

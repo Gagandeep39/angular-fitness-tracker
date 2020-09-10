@@ -28,7 +28,7 @@
 
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
-      <td mat-cell *matCellDef="let element"> {{element.date | date}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.date.seconds * 1000 | date:'yyyy/MM/dd h:mm:ss a'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="state">

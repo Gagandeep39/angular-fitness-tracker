@@ -4,6 +4,7 @@ import { Exercise } from 'src/app/models/exercise';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-past-training',
@@ -23,16 +24,24 @@ export class PastTrainingComponent implements OnInit, AfterViewInit {
     'calories',
     'state',
   ];
+  finishedExerciseSubscription: Subscription;
 
   constructor(private trainingService: TrainingService) {}
 
   ngOnInit(): void {
-    this.dataSource.data = this.trainingService.getExerciseHistory();
+    this.finishedExerciseSubscription = this.trainingService.finishedExerciseChange.subscribe(
+      (exercises) => (this.dataSource.data = exercises)
+    );
+    this.trainingService.getExerciseHistory();
   }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+  }
+
+  ngOnDestroy(): void {
+    this.finishedExerciseSubscription.unsubscribe();
   }
 
   doFilter(filterValue: string) {
