@@ -21,18 +21,14 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AuthModule } from './auth/auth.module';
+import { TrainingModule } from './training/training.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TrainingComponent,
-    CurrentTrainingComponent,
-    NewTrainingComponent,
-    PastTrainingComponent,
     WelcomeComponent,
     HeaderComponent,
     SidenavListComponent,
-    StopTrainingComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,10 +36,10 @@ import { AuthModule } from './auth/auth.module';
     BrowserAnimationsModule,
     MaterialDemoModule,
     FlexLayoutModule,
-    FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AuthModule
+    AuthModule,
+    TrainingModule
   ],
   providers: [],
   bootstrap: [AppComponent],
