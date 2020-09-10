@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { TrainingService } from './training.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -16,21 +17,22 @@ export class AuthService {
   constructor(
     private router: Router,
     private angularFireAuth: AngularFireAuth,
-    private trainingService: TrainingService
+    private trainingService: TrainingService,
+    private snackBar: MatSnackBar
   ) {}
 
   registerUser(authData: AuthData) {
     this.angularFireAuth
       .createUserWithEmailAndPassword(authData.email, authData.password)
       .then((result) => console.log(result))
-      .catch((error) => console.log(error));
+      .catch((error) => this.snackBar.open(error, 'Okay!', {duration: 3000}));
   }
 
   login(authData: AuthData) {
     this.angularFireAuth
       .signInWithEmailAndPassword(authData.email, authData.password)
       .then((result) => console.log(result))
-      .catch((error) => console.log(error));
+      .catch((error) => this.snackBar.open(error, 'Okay!', {duration: 3000}));
   }
 
   logout() {
@@ -43,10 +45,6 @@ export class AuthService {
 
   initAuthListener() {
     this.angularFireAuth.authState.subscribe((user) => {
-      console.log('Execiuted');
-      console.log(user);
-      
-      
       if (user) {
         this.isAuthenticated = true;
         this.authChange.next(true);
