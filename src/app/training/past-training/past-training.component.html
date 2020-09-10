@@ -1,9 +1,10 @@
-<div fxLayoutAlign="center center">
+<div class="mat-elevation-z8">
+<mat-card fxLayoutAlign="center center" class="mat-elevation-z0">
   <mat-form-field>
     <input matInput type="text" (input)="doFilter($event.target.value)" placeholder="Filter">
   </mat-form-field>
-</div>
-<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+</mat-card>
+<table mat-table [dataSource]="dataSource" matSort>
 
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Id. </th>
@@ -37,4 +38,7 @@
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
 </table>
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>
