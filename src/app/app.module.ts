@@ -15,6 +15,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AuthModule } from './auth/auth.module';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from './app.reducer';
+import { HttpClientModule } from '@angular/common/http';
+import { MenuComponent } from './navigation/menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,7 @@ import { reducers } from './app.reducer';
     WelcomeComponent,
     HeaderComponent,
     SidenavListComponent,
+    MenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,6 +36,7 @@ import { reducers } from './app.reducer';
     AngularFirestoreModule,
     AuthModule,
     StoreModule.forRoot(reducers),
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],
