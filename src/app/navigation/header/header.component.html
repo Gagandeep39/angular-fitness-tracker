@@ -7,10 +7,11 @@
   <span class="example-spacer"></span>
   <div fxHide.xs>
     <ul fxLayout fxLayoutGap="10px" class="navigation-items">
-      <li *ngIf="!(isAuth$ | async)"><a routerLink="/signup">Sign Up</a></li>
-      <li *ngIf="!(isAuth$ | async)"><a routerLink="/login">Login</a></li>
-      <li *ngIf="(isAuth$ | async)"><a routerLink="/training">Training</a></li>
-      <li *ngIf="(isAuth$ | async)" (click)="onLogout()">Logout</li>
+      <li *ngIf="!(isAuth$ | async)"><a routerLink="/signup" mat-ripple>Sign Up</a></li>
+      <li *ngIf="!(isAuth$ | async)"><a routerLink="/login" mat-ripple>Login</a></li>
+      <li *ngIf="(isAuth$ | async)"><a routerLink="/training" mat-ripple> Training</a></li>
+      <li *ngIf="(isAuth$ | async)" (click)="onLogout()" mat-ripple>Logout</li>
+      <li><a routerLink="/about" mat-ripple>About</a></li>
     </ul>
 
   </div>
