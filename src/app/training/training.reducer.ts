@@ -53,6 +53,7 @@ export function trainingReducer(state = initialState, action: TrainingActions) {
       };
     case STOP_TRAINING:
       return {
+        ...state,
         activeTraining: null,
       };
     default:
