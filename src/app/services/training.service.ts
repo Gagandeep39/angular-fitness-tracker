@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Exercise } from '../models/exercise';
-import { Subject, BehaviorSubject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { UiService } from './ui.service';
 import { Store } from '@ngrx/store';
@@ -14,21 +13,9 @@ import * as training from '../training/training.actions';
   providedIn: 'root',
 })
 export class TrainingService {
-  private activeExercise: Exercise;
-  public exerciseChange = new Subject<Exercise>();
-  public exercisesChange = new Subject<Exercise[]>();
-  public finishedExerciseChange = new Subject<Exercise[]>();
-  private availableExercise: Exercise[] = [];
   private exerciseHistorySubs: Subscription = null;
   private allExerciseSubs: Subscription = null;
   private allSubscription: Subscription[] = [];
-  //   private availableExercise: Exercise[] = [
-  //   { id: 'crunches', name: 'Crunches', duration: 30, calories: 8 },
-  //   { id: 'touch-toes', name: 'Touch Toes', duration: 180, calories: 15 },
-  //   { id: 'side-lunges', name: 'Side Lunges', duration: 120, calories: 18 },
-  //   { id: 'burpees', name: 'Burpees', duration: 60, calories: 8 },
-  //   { id: 'push-ups', name: 'Push Ups', duration: 60, calories: 20 },
-  // ];
   constructor(
     private firestoreDb: AngularFirestore,
     private uiService: UiService,
@@ -53,9 +40,6 @@ export class TrainingService {
       )
       .subscribe(
         (exercises) => {
-          // this.availableExercise = exercises;
-          // this.exercisesChange.next([...this.availableExercise]);
-          // this.uiService.loadStateChanged.next(false);
           this.store.dispatch(new training.SetAvailableTrainings(exercises));
           this.store.dispatch(new Ui.StopLoading());
         },
@@ -65,9 +49,7 @@ export class TrainingService {
             'Okay !',
             3000
           );
-          // this.uiService.loadStateChanged.next(false);
           this.store.dispatch(new Ui.StopLoading());
-          this.exercisesChange.next(null);
         }
       );
     this.allSubscription.push(this.allExerciseSubs);
@@ -81,8 +63,6 @@ export class TrainingService {
       .valueChanges()
       .subscribe(
         (exercises: Exercise[]) => {
-          // this.finishedExerciseChange.next(exercises);
-          // this.uiService.loadStateChanged.next(false);
           this.store.dispatch(new training.SetFinishedTrainings(exercises));
           this.store.dispatch(new Ui.StopLoading());
         },
@@ -92,7 +72,6 @@ export class TrainingService {
             'Okay !',
             3000
           );
-          // this.uiService.loadStateChanged.next(false);
           this.store.dispatch(new Ui.StopLoading());
         }
       );
@@ -100,12 +79,7 @@ export class TrainingService {
   }
 
   startExercise(selectedId: string) {
-    this.activeExercise = this.availableExercise.find(
-      (exer) => exer.id === selectedId
-    );
-
     this.store.dispatch(new training.StartTraining(selectedId));
-    // this.exerciseChange.next({ ...this.activeExercise });
   }
 
   completeExercise() {
@@ -120,8 +94,6 @@ export class TrainingService {
         });
         this.store.dispatch(new training.StopTraining());
       });
-    // this.activeExercise = null;
-    // this.exerciseChange.next(null);
   }
 
   cancelExercise(progress: number) {
@@ -138,13 +110,7 @@ export class TrainingService {
         });
         this.store.dispatch(new training.StopTraining());
       });
-    // this.activeExercise = null;
-    // this.exerciseChange.next(null);
   }
-
-  // getActiveExercise() {
-  //   return { ...this.activeExercise };
-  // }
 
   // Required to prevent errors afteer logout as the subscriptions keep on running
   cancelSubscriptions() {
