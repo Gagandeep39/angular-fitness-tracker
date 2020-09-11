@@ -1,17 +1,19 @@
-  <mat-toolbar color="primary">
-    <button fxHide.gt-xs mat-icon-button class="example-icon" (click)="onToggleSideNav()"
-      aria-label="Example icon-button with menu icon">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <span><a routerLink="/">Fitness Tracker</a></span>
-    <span class="example-spacer"></span>
-    <div fxHide.xs>
-      <ul fxLayout fxLayoutGap="10px" class="navigation-items">
-        <li *ngIf="!(isAuth$ | async)"><a routerLink="/signup">Sign Up</a></li>
-        <li *ngIf="!(isAuth$ | async)"><a routerLink="/login">Login</a></li>
-        <li *ngIf="(isAuth$ | async)"><a routerLink="/training">Training</a></li>
-        <li *ngIf="(isAuth$ | async)" (click)="onLogout()">Logout</li>
-      </ul>
+<mat-toolbar color="primary">
+  <button fxHide.gt-xs mat-icon-button class="example-icon" (click)="onToggleSideNav()"
+    aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span><a routerLink="/">Fitness Tracker</a></span>
+  <span class="example-spacer"></span>
+  <div fxHide.xs>
+    <ul fxLayout fxLayoutGap="10px" class="navigation-items">
+      <li *ngIf="!(isAuth$ | async)"><a routerLink="/signup">Sign Up</a></li>
+      <li *ngIf="!(isAuth$ | async)"><a routerLink="/login">Login</a></li>
+      <li *ngIf="(isAuth$ | async)"><a routerLink="/training">Training</a></li>
+      <li *ngIf="(isAuth$ | async)" (click)="onLogout()">Logout</li>
+    </ul>
 
-    </div>
-  </mat-toolbar>
+  </div>
+  <app-menu [options]="options$ | async" (themeChange)="themeChangeHandler($event)">
+  </app-menu>
+</mat-toolbar>
