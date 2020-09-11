@@ -3,10 +3,10 @@
     <mat-card fxFlex.xs="100%" fxFlex.gt-xs="400px">
       <mat-card-title fxLayoutAlign="center">Time to start workout</mat-card-title>
       <mat-card-content fxLayoutAlign="center">
-        <mat-form-field appearance="outline" *ngIf="!(isLoading$ | async) && trainings">
+        <mat-form-field appearance="outline" *ngIf="!(isLoading$ | async) && (trainings$ | async)">
           <mat-label>Select type of training</mat-label>
           <mat-select ngModel name="exercise" required>
-            <mat-option *ngFor="let exercise of trainings" [value]="exercise.id">
+            <mat-option *ngFor="let exercise of (trainings$ | async)" [value]="exercise.id">
               {{exercise.name}}
             </mat-option>
           </mat-select>
@@ -14,8 +14,8 @@
         <mat-spinner *ngIf="(isLoading$ | async)"></mat-spinner>
       </mat-card-content>
       <mat-card-actions fxLayoutAlign="center">
-        <button *ngIf="trainings" mat-stroked-button type="submit" [disabled]="form.invalid">Start</button>
-        <button *ngIf="!trainings" mat-stroked-button type="button" (click)="fetchExercises()">Retry</button>
+        <button *ngIf="(trainings$ | async)" mat-stroked-button type="submit" [disabled]="form.invalid">Start</button>
+        <button *ngIf="!(trainings$ | async)" mat-stroked-button type="button" (click)="fetchExercises()">Retry</button>
       </mat-card-actions>
     </mat-card>
   </form>

@@ -1,11 +1,11 @@
-<mat-spinner *ngIf="isLoading" fxLayoutAlign="center center"></mat-spinner>
 <div class="mat-elevation-z8">
   <mat-card fxLayoutAlign="center center" class="mat-elevation-z0">
     <mat-form-field>
       <input matInput type="text" (input)="doFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>
   </mat-card>
-  <table mat-table [dataSource]="dataSource" matSort>
+  <mat-spinner *ngIf="(isLoading$ | async)" fxLayoutAlign="center center"></mat-spinner>
+  <table mat-table [dataSource]="dataSource" matSort *ngIf="!(isLoading$ | async)">
 
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Id. </th>
