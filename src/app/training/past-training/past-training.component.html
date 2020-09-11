@@ -1,10 +1,10 @@
 <div class="mat-elevation-z8">
-  <mat-card fxLayoutAlign="center center" class="mat-elevation-z0">
-    <mat-form-field>
+  <mat-card class="mat-elevation-z0" fxLayoutAlign="center center">
+    <mat-form-field *ngIf="!(isLoading$ | async)">
       <input matInput type="text" (input)="doFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>
+    <mat-spinner *ngIf="(isLoading$ | async)"></mat-spinner>
   </mat-card>
-  <mat-spinner *ngIf="(isLoading$ | async)" fxLayoutAlign="center center"></mat-spinner>
   <table mat-table [dataSource]="dataSource" matSort *ngIf="!(isLoading$ | async)">
 
     <ng-container matColumnDef="id">
