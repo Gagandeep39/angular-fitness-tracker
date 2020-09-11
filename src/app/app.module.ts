@@ -17,6 +17,7 @@ import { StoreModule } from '@ngrx/store';
 import { reducers } from './app.reducer';
 import { HttpClientModule } from '@angular/common/http';
 import { MenuComponent } from './navigation/menu/menu.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { MenuComponent } from './navigation/menu/menu.component';
     HeaderComponent,
     SidenavListComponent,
     MenuComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,
