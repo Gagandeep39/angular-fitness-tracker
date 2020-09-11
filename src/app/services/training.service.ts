@@ -5,6 +5,9 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UiService } from './ui.service';
+import { Store } from '@ngrx/store';
+import { State } from '../app.reducer';
+import * as Ui from '../shared/ui.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -27,11 +30,12 @@ export class TrainingService {
   // ];
   constructor(
     private firestoreDb: AngularFirestore,
-    private uiService: UiService
+    private uiService: UiService,
+    private store: Store<State>
   ) {}
 
   getAllExercises() {
-    this.uiService.loadStateChanged.next(true);
+    this.store.dispatch(new Ui.StartLoading());
     this.allExerciseSubs = this.firestoreDb
       .collection('availableExercises')
       .snapshotChanges()
@@ -50,7 +54,8 @@ export class TrainingService {
         (exercises) => {
           this.availableExercise = exercises;
           this.exercisesChange.next([...this.availableExercise]);
-          this.uiService.loadStateChanged.next(false);
+          // this.uiService.loadStateChanged.next(false);
+          this.store.dispatch(new Ui.StopLoading());
         },
         (error) => {
           this.uiService.showSnackbar(
@@ -58,7 +63,8 @@ export class TrainingService {
             'Okay !',
             3000
           );
-          this.uiService.loadStateChanged.next(false);
+          // this.uiService.loadStateChanged.next(false);
+          this.store.dispatch(new Ui.StopLoading());
           this.exercisesChange.next(null);
         }
       );
@@ -66,7 +72,7 @@ export class TrainingService {
   }
 
   getExerciseHistory() {
-    this.uiService.loadStateChanged.next(true);
+    this.store.dispatch(new Ui.StartLoading());
     // Here we dnt need ID sowe can just fetch other data
     this.exerciseHistorySubs = this.firestoreDb
       .collection('completedExercise')
@@ -74,7 +80,8 @@ export class TrainingService {
       .subscribe(
         (exercises: Exercise[]) => {
           this.finishedExerciseChange.next(exercises);
-          this.uiService.loadStateChanged.next(false);
+          // this.uiService.loadStateChanged.next(false);
+          this.store.dispatch(new Ui.StopLoading());
         },
         (error) => {
           this.uiService.showSnackbar(
@@ -82,7 +89,8 @@ export class TrainingService {
             'Okay !',
             3000
           );
-          this.uiService.loadStateChanged.next(false);
+          // this.uiService.loadStateChanged.next(false);
+          this.store.dispatch(new Ui.StopLoading());
         }
       );
     this.allSubscription.push(this.exerciseHistorySubs);
