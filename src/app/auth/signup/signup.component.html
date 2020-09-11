@@ -1,64 +1,29 @@
 <section class="signup-form">
-  <form 
-  fxLayout="column" 
-  fxLayoutAlign="center center" 
-  (ngSubmit)="submitForm(signupForm)" 
-  #signupForm="ngForm"
-  >
+  <form fxLayout="column" fxLayoutAlign="center center" (ngSubmit)="submitForm(signupForm)" #signupForm="ngForm">
     <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
-      <input 
-      matInput 
-      type="email" 
-      placeholder="Your Email *" 
-      ngModel name="email" 
-      email 
-      required 
-      #eml="ngModel"
-      >
+      <input matInput type="email" placeholder="Your Email *" ngModel name="email" email required #eml="ngModel">
       <mat-error *ngIf="eml.hasError('required')">Required *</mat-error>
       <mat-error *ngIf="eml.hasError('email')">Invalid Email</mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Password</mat-label>
-      <input 
-      matInput 
-      type="password" 
-      placeholder="Your Password *" 
-      ngModel 
-      name="password" 
-      required 
-      minlength="6" 
-      #pwd
-      >
+      <input matInput type="password" placeholder="Your Password *" ngModel name="password" required minlength="6" #pwd>
       <mat-hint> {{ pwd.value?.length }}/6</mat-hint>
       <mat-error>Should be atleast 6 characters</mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Birthdate</mat-label>
-      <input 
-      ngModel
-      name="birthday"
-      required
-      matInput 
-      [matDatepicker]="picker" 
-      [max]="maxDate"
-      >
+      <input ngModel name="birthday" required matInput [matDatepicker]="picker" [max]="maxDate">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker> 
+      <mat-datepicker #picker></mat-datepicker>
       <mat-error>Required *</mat-error>
     </mat-form-field>
     <mat-checkbox ngModel name="agree" required>I Agree</mat-checkbox>
-    <button 
-    *ngIf="!isLoading"
-    mat-raised-button  
-    style="margin-top: '10px'" 
-    color="primary" 
-    type="submit" 
-    [disabled]="signupForm.invalid"
-    >
-    Submit
+    <button *ngIf="!(isLoading$ | async)" mat-raised-button style="margin-top: '10px'" color="primary" type="submit"
+      [disabled]="signupForm.invalid">
+      Submit
     </button>
-    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <mat-spinner *ngIf="(isLoading$ | async)"></mat-spinner>
   </form>
 </section>
