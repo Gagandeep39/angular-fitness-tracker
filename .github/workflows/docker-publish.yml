@@ -20,7 +20,7 @@ jobs:
         run: |
           npm install -g @angular/cli@latest
           npm install
-          ng build --prod --base-href="/angular-fitness-tracker/"
+          ng build --prod --base-href="/"
       - name: Set env
         run: echo "::set-env name=NOW::v$(date +'%Y%m%d.%H%M%S')"
         # Required for Build and push step
