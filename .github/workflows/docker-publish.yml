@@ -43,4 +43,6 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64,linux/386
           push: true
-          tags: gagandeep39/angular-fitness-tracker:${{env.NOW}}
+          tags: |
+            gagandeep39/angular-fitness-tracker:${{env.NOW}}
+            gagandeep39/angular-fitness-tracker:latest
